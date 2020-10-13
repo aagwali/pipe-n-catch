@@ -49,11 +49,7 @@ const formatObj = (x: any, maxArrayLength = 2): string =>
     : x
 
 export const logAs = <T>(label: string) => (x: T): T => {
-  console.log(
-    chalk`{${selectStyle(label)} ${label}}\n{${selectStyle(
-      "none"
-    )} ${formatObj(x)}}`
-  )
+  console.log(chalk`{${selectStyle(label)} ${label}}\n{${selectStyle("none")} ${formatObj(x)}}`)
   addBackspace(label)
   return x
 }

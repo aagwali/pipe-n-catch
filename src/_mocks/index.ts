@@ -1,4 +1,3 @@
-
 export const mockResponse = {
   response: {
     status: 203,

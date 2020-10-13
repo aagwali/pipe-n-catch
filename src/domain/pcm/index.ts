@@ -3,12 +3,7 @@ import { defaultValue } from "../../_mocks"
 import { defaultWhen, equalError, setState, wrapWhen } from "../core"
 import { stateError } from "../core/behaviors"
 import { getProductViewById } from "./services"
-import {
-  PcmErrors,
-  PcmProductView,
-  PcmProductView_,
-  productView,
-} from "./types"
+import { PcmErrors, PcmProductView_, productView } from "./types"
 
 export const getProductView = (randomResult: number): productView<any> =>
   setState({ productView: PcmProductView_ }, async () => {
