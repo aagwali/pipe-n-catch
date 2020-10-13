@@ -12,7 +12,7 @@ import { randomResult, UtilsErrors } from "./types"
 
 export const getRandomNumber = (floor: string): randomResult<number> =>
   setState({ randomResult: number }, async () => {
-    const randomResult = defaultWhen([equals(0), 2])(
+    const randomResult = defaultWhen([equals(0), 3])(
       generateRandom(Number(floor))
     )
     await raiseWhen([randomResult, equals(1)])(UtilsErrors.BadRandomResult)

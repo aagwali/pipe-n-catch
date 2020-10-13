@@ -6,14 +6,16 @@ import { AppErrors, StateError } from "./types"
 
 export const buildErrorMessage = (error: AppErrors, value?: any): string => {
   switch (error) {
-    case PcmErrors.NotFound:
-      return `value "${value}" : pcm call raised a NotFound error`
     case UtilsErrors.BadRandomResult:
       return `value "${value}" : ${UtilsErrors.BadRandomResult}`
+    case PcmErrors.NotFound:
+      return `value "${value}" : pcm call raised a NotFound error`
+    case PcmErrors.Conflict:
+      return `value "${value}" : pcm call raised a Conflict error`
     case PcmErrors.InvalidResponse:
       return `value "${value}" : missing key on Pcm call result`
     default:
-      return "buildErrorMessage : Unknown Error"
+      ;((missingErrorCase: never) => {})(error)
   }
 }
 
