@@ -1,0 +1,25 @@
+ [0,2,4] = success  1 - raised  3 - api404  5 - 409 fallback
+- todo wrapWhen = try to be based on error.name because error.message maybe too long (waiting for true async errors tests)
+- todo fallbackOnError how to fallback using 409 response content ? (waitng for true async errors tests)
+- todo create list with n.rdmResLength + pv > run conc with odd errors
+
+ .catch(wrapWhen([PcmErrors.NotFound], randomResult))
+ .catch(fallbackOnError([Pcm
+
+    const randomResult = defaultWhen(
+      generateRandom(Number(floor)),
+      equals(0)
+    )(always(3))
+
+
+    export const getRandomNumber = (floor) =>
+  setState({ randomResult: number }, async () => ({
+    randomResult: await pWaterfall(
+      [
+        generateRandom,
+        defaultWhen([equals(0), always(1)]),
+        raiseWhen([equals(0), UtilsErrors.BadRandomResult]),
+      ],
+      Number(floor)
+    ),
+  }))

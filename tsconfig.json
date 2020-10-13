@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "skipLibCheck": true,
+    "target": "es5",
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "strict": false,
+    "lib": [
+      "es2015",
+      "es2017",
+      "scripthost",
+      "es2015.promise",
+      "es2015.generator",
+      "es2015.iterable",
+      "dom",
+      "dom.iterable"
+    ],
+    "plugins": [
+      {
+        "name": "typescript-tslint-plugin"
+      }
+    ],
+    "types": [
+      "node",
+    ],
+  }
+}
