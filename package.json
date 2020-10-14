@@ -1,5 +1,5 @@
 {
-  "name": "agwaguidelines",
+  "name": "pipe-n-catch",
   "version": "0.1.0",
   "description": "",
   "main": "index.js",
@@ -8,10 +8,9 @@
   "scripts": {
     "dev": "npx nodemon --exec 'node --inspect -r ts-node/register index.ts'",
     "start": "npx ts-node index.ts",
-    "test": "npx ava",
-    "test-w": "npx ava --watch",
+    "test": "echo test",
+    "test-w": "echo test-watch",
     "ts-check": "npx tsc --noEmit --skipLibCheck",
-    "docker": "sh ./launch.sh",
     "release": "standard-version",
     "format": "prettier-tslint fix \"src/**/*.ts\"",
     "precommit": "npm run ts-check && npx ava && npm run lint",
@@ -38,18 +37,7 @@
   "dependencies": {
     "decoders": "^1.23.3",
     "dotenv": "^8.2.0",
-    "fs": "0.0.2",
-    "p-waterfall": "^2.1.0",
     "rambda": "^6.2.0"
-  },
-  "ava": {
-    "extensions": [
-      "ts"
-    ],
-    "require": [
-      "ts-node/register"
-    ],
-    "babel": true
   },
   "config": {
     "commitizen": {
@@ -57,13 +45,6 @@
     }
   },
   "lint-staged": {
-    "linters": {
-      "*.{js,jsx}": [
-        "npm run lint",
-        "npm run format",
-        "git add"
-      ]
-    },
     "ignore": [
       "**/dist/"
     ]
