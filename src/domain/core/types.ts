@@ -14,7 +14,7 @@ export type AppState = {
 
 export type State<T> = Promise<T>
 
-export type AppErrors = PcmErrors | UtilsErrors
+export type ErrorLabels = PcmErrors | UtilsErrors
 
 export enum LogTypes {
   Fluent = "Fluent",

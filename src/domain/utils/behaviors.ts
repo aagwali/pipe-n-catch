@@ -1,1 +1,2 @@
-export const generateRandom = (floorValue) => Math.floor(Math.random() * Math.floor(floorValue))
+export const generateRandom = (floorValue: number): number =>
+  Math.floor(Math.random() * Math.floor(floorValue))

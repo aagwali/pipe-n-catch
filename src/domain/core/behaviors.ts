@@ -1,10 +1,10 @@
 import { appState } from "."
 import { PcmErrors } from "../pcm/types"
-import { logAs, logDebug } from "../utils/customConsole"
+import { logAs } from "../utils/customConsole"
 import { UtilsErrors } from "../utils/types"
-import { AppErrors, StateError } from "./types"
+import { ErrorLabels, StateError } from "./types"
 
-export const buildErrorMessage = (error: AppErrors, value?: any): string => {
+export const buildErrorMessage = (error: ErrorLabels, value?: any): string => {
   switch (error) {
     case UtilsErrors.BadRandomResult:
       return `value "${value}" : ${UtilsErrors.BadRandomResult}`
@@ -19,20 +19,22 @@ export const buildErrorMessage = (error: AppErrors, value?: any): string => {
   }
 }
 
-export const stateError = (error: Error | AppErrors | string, value?: any) => {
-  if (error instanceof Error) throw new StateError(error.message)
-  throw new StateError(buildErrorMessage(PcmErrors.InvalidResponse, value))
+export const stateError = (error: Error): never => {
+  throw new StateError(error.message)
 }
 
-export const logAppStart = (appName: string) =>
+export const formatError = (error: ErrorLabels, value: any): never => {
+  throw Error(buildErrorMessage(error, value))
+}
+
+export const logAppStart = (appName: string): void =>
   logAs("Application started")(`Running ${appName}...`)
 
-export const logInitAppError = (throwedValue: Error) =>
+export const logInitAppError = (throwedValue: Error): void =>
   logAs("Initiation error")(throwedValue.message)
 
-export const logAppSuccess = () => logAs("Application success")(appState)
+export const logAppSuccess = (): void => logAs("Application success")(appState)
 
-export const logAppError = (error: StateError) => {
+export const logAppError = (error: StateError): void => {
   logAs("Application error")(error.message)
-  if (error.debug) logDebug(error.debug)
 }

@@ -28,17 +28,6 @@ const selectStyle = (x: any) => {
   }
 }
 
-const addBackspace = (x: any) => {
-  switch (x) {
-    case "Application started":
-    case "Application Info":
-    case "Application success":
-    case "Application error":
-      console.log("")
-      break
-  }
-}
-
 const formatObj = (x: any, maxArrayLength = 2): string =>
   typeof x === "object"
     ? util.inspect(x, {
@@ -48,13 +37,11 @@ const formatObj = (x: any, maxArrayLength = 2): string =>
       })
     : x
 
-export const logAs = <T>(label: string) => (x: T): T => {
+export const logAs = <T>(label: string) => (x: T): void => {
   console.log(chalk`{${selectStyle(label)} ${label}}\n{${selectStyle("none")} ${formatObj(x)}}`)
-  addBackspace(label)
-  return x
+  console.log("")
 }
 
-export const logDebug = <T>(x: T): T => {
+export const logDebug = <T>(x: T): void => {
   console.log(chalk`{${colors.purple} Debug}\n${formatObj(x, Infinity)}\n`)
-  return x
 }

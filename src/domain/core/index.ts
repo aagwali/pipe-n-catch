@@ -1,7 +1,7 @@
 import { Decoder, guard } from "decoders"
 import { logAs, logDebug } from "../utils/customConsole"
 import { buildErrorMessage, stateError } from "./behaviors"
-import { AppErrors, AppState, Config, SetStateOption } from "./types"
+import { ErrorLabels, AppState, Config, SetStateOption } from "./types"
 
 export const appConfig: Config = {
   confVar: process.env.CONF_VAR,
@@ -45,6 +45,10 @@ export const setState = (
   }
 }
 
+export const isAppError = (errorCode: ErrorLabels) => (error: Error): boolean => {
+  return error.message === String(errorCode)
+}
+
 export const defaultWhen = <T, U>([predicate, fallback]: [(x: T) => boolean, T | U]) => (
   value: T
 ): T | U => {
@@ -57,25 +61,22 @@ export const defaultWhen = <T, U>([predicate, fallback]: [(x: T) => boolean, T |
 }
 
 export const raiseWhen = <T>([value, predicate]: [T, (x: T) => boolean]) => async (
-  code: AppErrors
+  code: ErrorLabels
 ): Promise<void> => {
   if (predicate(value)) {
     const errorMessage = buildErrorMessage(code, value)
-    throw new Error(errorMessage)
+    throw Error(errorMessage)
   }
 }
 
-export const wrapWhen = (errorCodes: AppErrors[], raisedWith?: any) => (
+export const wrapWhen = (errorCodes: ErrorLabels[], raisedWith?: any) => (
   errorValue: Error
 ): never => {
   const registeredError = errorCodes.find((errorCode) => String(errorCode) === errorValue.message)
   if (registeredError) {
     const errorMessage = buildErrorMessage(registeredError, raisedWith)
-    throw new Error(errorMessage)
+    throw Error(errorMessage)
   } else {
     throw errorValue
   }
 }
-
-export const isAppError = (errorCode: AppErrors) => (error: Error): boolean =>
-  error.message === String(errorCode)
