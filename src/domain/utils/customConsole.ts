@@ -38,10 +38,10 @@ const formatObj = (x: any, maxArrayLength = 2): string =>
     : x
 
 export const logAs = <T>(label: string) => (x: T): void => {
-  console.log(chalk`{${selectStyle(label)} ${label}}\n{${selectStyle("none")} ${formatObj(x)}}`)
-  console.log("")
+  console.info(chalk`{${selectStyle(label)} ${label}}\n{${selectStyle("none")} ${formatObj(x)}}`)
+  console.info("")
 }
 
 export const logDebug = <T>(x: T): void => {
-  console.log(chalk`{${colors.purple} Debug}\n${formatObj(x, Infinity)}\n`)
+  console.info(chalk`{${colors.purple} Debug}\n${formatObj(x, Infinity)}\n`)
 }

@@ -1,4 +1,4 @@
-import { array, string, object, number, Decoder } from "decoders"
+import { array, Decoder, number, object, string } from "decoders"
 
 export enum PcmErrors {
   NotFound = "api error 404 not found",
@@ -6,7 +6,7 @@ export enum PcmErrors {
   InvalidResponse = "invalid response throw",
 }
 
-export type productView<T> = Promise<{ productView: T }>
+export type ProductView<T> = Promise<{ productView: T }>
 
 export type PcmProductView = {
   id: number
@@ -18,7 +18,7 @@ export type PcmProductView = {
   }[]
 }
 
-export const PcmProductView_: Decoder<any, unknown> = object({
+export const pcmProductView: Decoder<any, unknown> = object({
   id: number,
   product_family_id: number,
   number: number,

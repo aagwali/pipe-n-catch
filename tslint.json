@@ -1,0 +1,36 @@
+{
+  "extends": ["tslint:latest", "tslint-config-prettier"],
+  "rules": {
+    "no-submodule-imports": [true, "next", "#core", "#domains", "#styles"],
+    "no-empty-interface": false,
+    "curly": [true, "ignore-same-line"],
+    "no-console": [true, "log"],
+    "no-unused-expression": [true, "allow-tagged-template"],
+    "interface-over-type-literal": false,
+    "no-shadowed-variable": true,
+    "no-implicit-dependencies": [true, "dev"],
+    "interface-name": false,
+    "variable-name": [true, "ban-keywords", "check-format", "allow-pascal-case", "allow-leading-underscore"],
+    "no-bitwise": false,
+    "object-literal-shorthand": false,
+    "jsx-no-lambda": false,
+    "no-namespace": [true, "allow-declarations"],
+    "prefer-function-over-method": [true, "allow-public", "allow-protected"],
+    "member-ordering": [
+      true,
+      {
+        "order": [
+          "private-static-field",
+          "public-static-field",
+          "private-instance-field",
+          "public-instance-field",
+          "private-constructor",
+          "public-constructor",
+          "private-instance-method",
+          "protected-instance-method",
+          "public-instance-method"
+        ]
+      }
+    ]
+  }
+}

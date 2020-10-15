@@ -1,9 +1,9 @@
-import { appConfig, appState } from "./domain/core"
-import { logAppSuccess, logAppError } from "./domain/core/behaviors"
 import * as Pcm from "./domain/pcm"
 import * as Utils from "./domain/utils"
+import { appConfig, appState } from "./domain/core"
+import { logAppError, logAppSuccess } from "./domain/core/behaviors"
 
-export const startApp = async function (): Promise<void> {
+export const startApp = async (): Promise<void> => {
   try {
     await Utils.getRandomNumber(appConfig.randomFloor)
     await Pcm.getProductView(appState.randomResult)
@@ -11,5 +11,4 @@ export const startApp = async function (): Promise<void> {
   } catch (error) {
     logAppError(error)
   }
-  process.exit
 }

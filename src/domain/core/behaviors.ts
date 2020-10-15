@@ -4,7 +4,7 @@ import { logAs } from "../utils/customConsole"
 import { UtilsErrors } from "../utils/types"
 import { ErrorLabels, StateError } from "./types"
 
-export const buildErrorMessage = (error: ErrorLabels, value?: any): string => {
+export const buildErrorMessage = (error: ErrorLabels, value?: any): string | undefined => {
   switch (error) {
     case UtilsErrors.BadRandomResult:
       return `value "${value}" : ${UtilsErrors.BadRandomResult}`
@@ -14,8 +14,9 @@ export const buildErrorMessage = (error: ErrorLabels, value?: any): string => {
       return `value "${value}" : pcm call raised a Conflict error`
     case PcmErrors.InvalidResponse:
       return `value "${value}" : missing key on Pcm call result`
-    default:
-      ;((missingErrorCase: never) => {})(error)
+    default: {
+      ;((missingErrorCase: never) => "")(error)
+    }
   }
 }
 

@@ -1,7 +1,7 @@
+import { AppState, Config, ErrorLabels, SetStateOption } from "./types"
+import { buildErrorMessage, stateError } from "./behaviors"
 import { Decoder, guard } from "decoders"
 import { logAs, logDebug } from "../utils/customConsole"
-import { buildErrorMessage, stateError } from "./behaviors"
-import { ErrorLabels, AppState, Config, SetStateOption } from "./types"
 
 export const appConfig: Config = {
   confVar: process.env.CONF_VAR,
@@ -49,7 +49,7 @@ export const isAppError = (errorCode: ErrorLabels) => (error: Error): boolean =>
   return error.message === String(errorCode)
 }
 
-export const defaultWhen = <T, U>([predicate, fallback]: [(x: T) => boolean, T | U]) => (
+export const defaultWhen = <T, U>(predicate: (x: T) => boolean, fallback: T | U) => (
   value: T
 ): T | U => {
   if (predicate(value)) {
@@ -60,7 +60,7 @@ export const defaultWhen = <T, U>([predicate, fallback]: [(x: T) => boolean, T |
   }
 }
 
-export const raiseWhen = <T>([value, predicate]: [T, (x: T) => boolean]) => async (
+export const raiseWhen = <T>(value: T, predicate: (x: T) => boolean) => async (
   code: ErrorLabels
 ): Promise<void> => {
   if (predicate(value)) {

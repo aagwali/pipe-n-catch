@@ -11,8 +11,6 @@
     "test-w": "echo test-watch",
     "ts-check": "npx tsc --noEmit --skipLibCheck",
     "release": "standard-version",
-    "format": "prettier-tslint fix \"src/**/*.ts\"",
-    "precommit": "npm run ts-check && npx ava && npm run lint",
     "lint": "tslint --project .",
     "sonar-jest": "npm run test -- --coverage --no-cache --detectOpenHandles",
     "update:packages": "node wipe-dependencies.js && rm -rf node_modules && npm update --save-dev && npm update --save"
@@ -25,21 +23,16 @@
     "@babel/preset-env": "^7.11.5",
     "@babel/preset-typescript": "^7.10.4",
     "@types/node": "*",
-    "commitizen": "*",
-    "cz-conventional-changelog": "*",
-    "husky": "*",
-    "jest-sonar-reporter": "*",
     "nodemon": "*",
     "prettier": "*",
-    "prettier-tslint": "*",
     "standard-version": "*",
     "ts-node": "*",
     "tslint": "*",
     "tslint-config-prettier": "*",
-    "tslint-config-standard": "*",
     "typescript": "*"
   },
   "dependencies": {
+    "chalk": "^4.1.0",
     "decoders": "^1.23.3",
     "dotenv": "^8.2.0",
     "rambda": "^6.2.0"

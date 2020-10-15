@@ -1,15 +1,14 @@
-import { startApp } from "./app"
 import { appConfig } from "./domain/core"
-import { logAppStart, logInitAppError } from "./domain/core/behaviors"
 import { decodeConfig } from "./domain/core/types"
+import { logAppStart, logInitAppError } from "./domain/core/behaviors"
+import { startApp } from "./app"
 
-export const initApp = async (): Promise<void> => {
+export const initApp = (): void => {
   try {
     decodeConfig(appConfig)
     logAppStart("App example")
-    await startApp()
+    startApp()
   } catch (error) {
     logInitAppError(error)
   }
-  process.exit()
 }

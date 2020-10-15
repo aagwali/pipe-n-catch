@@ -1,5 +1,5 @@
 import { guard, object, string } from "decoders"
-import { PcmProductView, PcmErrors } from "../pcm/types"
+import { PcmErrors, PcmProductView } from "../pcm/types"
 import { UtilsErrors } from "../utils/types"
 
 export type Config = {
