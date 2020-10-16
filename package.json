@@ -32,6 +32,7 @@
     "typescript": "*"
   },
   "dependencies": {
+    "async-parallel": "^1.2.3",
     "chalk": "^4.1.0",
     "decoders": "^1.23.3",
     "dotenv": "^8.2.0",

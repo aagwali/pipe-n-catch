@@ -1,18 +1,18 @@
 import { guard, object, string } from "decoders"
-import { SwapiStarship } from "../swapi/types"
+import { SwapiPilots, SwapiStarship } from "../swapi/types"
 import { UtilsErrors } from "../randomNumber/types"
 
 export type Config = {
   minRandom: string
   maxRandom: string
+  maxConcurrency: string
 }
 
 export type AppState = {
   randomResult: number
   starship: SwapiStarship
+  pilots: SwapiPilots
 }
-
-export type State<T> = Promise<T>
 
 export type ErrorLabels = UtilsErrors
 

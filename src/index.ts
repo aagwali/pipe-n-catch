@@ -1,6 +1,5 @@
-import { appConfig } from "./domain/core"
+import { appConfig, logAppStart, logError } from "./domain/core"
 import { decodeConfig } from "./domain/core/types"
-import { logAppStart, logInitAppError } from "./domain/core/behaviors"
 import { startApp } from "./app"
 
 export const initApp = (): void => {
@@ -9,6 +8,6 @@ export const initApp = (): void => {
     logAppStart("App example")
     startApp()
   } catch (error) {
-    logInitAppError(error)
+    logError("Initiation error", error)
   }
 }
