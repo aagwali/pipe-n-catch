@@ -1,16 +1,16 @@
 import { AppState, Config, ErrorLabels, SetStateOption } from "./types"
 import { buildErrorMessage, stateError } from "./behaviors"
 import { Decoder, guard } from "decoders"
-import { logAs, logDebug } from "../utils/customConsole"
+import { logAs, logDebug } from "../logs"
 
 export const appConfig: Config = {
-  confVar: process.env.CONF_VAR,
-  randomFloor: process.env.RANDOM_FLOOR,
+  minRandom: process.env.MIN_RANDOM,
+  maxRandom: process.env.MAX_RANDOM,
 }
 
 export let appState: AppState = {
   randomResult: null,
-  productView: null,
+  starship: null,
 }
 
 export const decodeToState = async <T>(
@@ -53,38 +53,32 @@ export const getState = <T>(x: T): T => {
   }
 }
 
-export const isAppError = (errorCode: ErrorLabels) => (error: Error): boolean => {
-  return error.message === String(errorCode)
-}
-
-export const defaultWhen = <T, U>(predicate: (x: T) => boolean, fallback: T | U) => (
-  value: T
-): T | U => {
-  if (predicate(value)) {
-    return fallback
-  } else {
-    if (value instanceof Error) throw value
-    return value
-  }
-}
-
 export const raiseWhen = <T>(value: T, predicate: (x: T) => boolean) => async (
   code: ErrorLabels
 ): Promise<void> => {
   if (predicate(value)) {
-    const errorMessage = buildErrorMessage(code, value)
-    throw Error(errorMessage)
+    throw Error(buildErrorMessage(code, value))
   }
 }
 
-export const wrapWhen = (errorCodes: ErrorLabels[], raisedWith?: any) => (
-  errorValue: Error
-): never => {
-  const registeredError = errorCodes.find((errorCode) => String(errorCode) === errorValue.message)
-  if (registeredError) {
-    const errorMessage = buildErrorMessage(registeredError, raisedWith)
-    throw Error(errorMessage)
+export const defaultWhen = <T>(predicate: (x: T) => boolean, fallback: T) => (value: T): T => {
+  if (predicate(value)) {
+    return fallback
   } else {
-    throw errorValue
+    return value
   }
+}
+
+export const handleWhen = <T, U>(predicate: (x: Error) => boolean, fallback: (x: Error) => T) => (
+  value: Error
+): T => {
+  if (predicate(value)) {
+    return fallback(value)
+  } else {
+    throw value
+  }
+}
+
+export const isHttpErrorStatus = (statusCode: number) => (httpError: any): boolean => {
+  return httpError.statusCode === statusCode
 }

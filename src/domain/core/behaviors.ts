@@ -1,19 +1,12 @@
 import { appState } from "."
-import { PcmErrors } from "../pcm/types"
-import { logAs } from "../utils/customConsole"
-import { UtilsErrors } from "../utils/types"
+import { UtilsErrors } from "../randomNumber/types"
+import { logAs } from "../logs"
 import { ErrorLabels, StateError } from "./types"
 
 export const buildErrorMessage = (error: ErrorLabels, value?: any): string | undefined => {
   switch (error) {
-    case UtilsErrors.BadRandomResult:
-      return `value "${value}" : ${UtilsErrors.BadRandomResult}`
-    case PcmErrors.NotFound:
-      return `value "${value}" : pcm call raised a NotFound error`
-    case PcmErrors.Conflict:
-      return `value "${value}" : pcm call raised a Conflict error`
-    case PcmErrors.InvalidResponse:
-      return `value "${value}" : missing key on Pcm call result`
+    case UtilsErrors.ExcludedRandomResult:
+      return `value "${value}" : ${UtilsErrors.ExcludedRandomResult}`
     default: {
       ;((missingErrorCase: never) => "")(error)
     }
