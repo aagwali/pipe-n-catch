@@ -45,6 +45,14 @@ export const setState = (
   }
 }
 
+export const getState = <T>(x: T): T => {
+  if (x == null) {
+    stateError(Error("using of a state key not set yet"))
+  } else {
+    return x
+  }
+}
+
 export const isAppError = (errorCode: ErrorLabels) => (error: Error): boolean => {
   return error.message === String(errorCode)
 }
