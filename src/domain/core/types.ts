@@ -1,20 +1,20 @@
 import { guard, object, string } from "decoders"
-import { PcmErrors, PcmProductView } from "../pcm/types"
-import { UtilsErrors } from "../utils/types"
+import { SwapiStarship } from "../swapi/types"
+import { UtilsErrors } from "../randomNumber/types"
 
 export type Config = {
-  confVar: string
-  randomFloor: string
+  minRandom: string
+  maxRandom: string
 }
 
 export type AppState = {
   randomResult: number
-  productView: PcmProductView
+  starship: SwapiStarship
 }
 
 export type State<T> = Promise<T>
 
-export type ErrorLabels = PcmErrors | UtilsErrors
+export type ErrorLabels = UtilsErrors
 
 export enum LogTypes {
   Fluent = "Fluent",
@@ -31,8 +31,8 @@ export class StateError extends Error {
 }
 
 export const configGuard = object({
-  confVar: string,
-  randomFloor: string,
+  minRandom: string,
+  maxRandom: string,
 })
 
 export const decodeConfig = guard(configGuard)

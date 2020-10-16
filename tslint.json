@@ -1,7 +1,7 @@
 {
   "extends": ["tslint:latest", "tslint-config-prettier"],
   "rules": {
-    "no-submodule-imports": [true, "next", "#core", "#domains", "#styles"],
+    "no-submodule-imports": [false],
     "no-empty-interface": false,
     "curly": [true, "ignore-same-line"],
     "no-console": [true, "log"],

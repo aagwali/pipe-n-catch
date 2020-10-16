@@ -35,7 +35,8 @@
     "chalk": "^4.1.0",
     "decoders": "^1.23.3",
     "dotenv": "^8.2.0",
-    "rambda": "^6.2.0"
+    "rambda": "^6.2.0",
+    "typed-rest-client": "^1.7.3"
   },
   "config": {
     "commitizen": {
