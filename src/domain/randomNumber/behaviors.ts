@@ -1,4 +1,4 @@
-import { appConfig } from "../core"
+import { appConfig } from "../application";
 
 export const generateRandomUnder = (floorValue: number): number =>
   Math.floor(

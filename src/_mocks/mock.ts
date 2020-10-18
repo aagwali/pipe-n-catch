@@ -3,8 +3,8 @@ import { SwapiStarship } from "../domain/swapi/types"
 
 export const defaultShip: IRestResponse<SwapiStarship> = {
   result: {
-    name: "default value when 404 not found",
-    model: "default",
+    name: "when hope seems to be 404 not found",
+    model: "you can always count on...",
     manufacturer: "default",
     hyperdrive_rating: "default",
     starship_class: "default",

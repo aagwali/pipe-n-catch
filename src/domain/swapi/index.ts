@@ -1,12 +1,19 @@
-import { always, equals, pipe, prop, when } from "rambda"
-import { defaultShip } from "../../_mocks/mock"
-import { appConfig, setState } from "../core"
-import { getPilotsById, getStarshipById } from "./services"
-import { SwapiStarship, swapiStarship, Starship, SwapiPilots, Pilots, swapiPilots } from "./types"
 import * as Parallel from "async-parallel"
-import { LogTypes } from "../core/types"
+import { always, equals, pipe, prop, when } from "rambda"
+import { appConfig } from "../application"
+import { defaultShip } from "../../_mocks/mock"
+import { getPilotsById, getStarshipById } from "./services"
+import {
+  StateKeyPilots,
+  StateKeyStarship,
+  SwapiPilots,
+  swapiPilots,
+  SwapiStarship,
+  swapiStarship,
+} from "./types"
+import { setState } from "../state"
 
-export const getStarship = (randomResult: number): Starship<SwapiStarship> =>
+export const getStarship = (randomResult: number): StateKeyStarship<SwapiStarship> =>
   setState({ starship: swapiStarship })(async () => {
     const response = await getStarshipById(randomResult).then(
       when(pipe(prop("statusCode"), equals(404)), always(defaultShip))
@@ -16,7 +23,7 @@ export const getStarship = (randomResult: number): Starship<SwapiStarship> =>
     return { starship }
   })
 
-export const getStarshipPilots = (starShip: SwapiStarship): Pilots<SwapiPilots[]> =>
+export const getStarshipPilots = (starShip: SwapiStarship): StateKeyPilots<SwapiPilots[]> =>
   setState({ pilots: swapiPilots })(async () => {
     const response = await Parallel.map(
       starShip.pilots,

@@ -10,4 +10,3 @@ export const getStarshipById = (randomResult: number): Promise<IRestResponse<Swa
 
 export const getPilotsById = (pilot: string): Promise<IRestResponse<SwapiPilots>> =>
   swapiClient.get<SwapiPilots>(String(pilot))
-

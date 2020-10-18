@@ -1,13 +1,12 @@
-import { appConfig, logAppStart, logError } from "./domain/core"
-import { decodeConfig } from "./domain/core/types"
-import { startApp } from "./app"
+import * as Application from "./domain/application";
+import { logAs } from "./domain/chalkLogs"
 
 export const initApp = (): void => {
   try {
-    decodeConfig(appConfig)
-    logAppStart("App example")
-    startApp()
+    logAs("Application started", `Running swapi example from https://swapi.dev/`)
+    Application.validateConfig()
+    Application.start()
   } catch (error) {
-    logError("Initiation error", error)
+    logAs("Initiation error", error)
   }
 }
