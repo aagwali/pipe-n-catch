@@ -8,7 +8,7 @@ export const defaultShip: IRestResponse<SwapiStarship> = {
     manufacturer: "default",
     hyperdrive_rating: "default",
     starship_class: "default",
-    pilots: ["http://swapi.dev/api/people/4/"],
+    pilots: ["http://swapi.dev/api/people/1/"],
   },
   statusCode: 308,
   headers: {},

@@ -2,6 +2,8 @@ import { array, Decoder, number, object, string } from "decoders"
 
 export type Starship<T> = Promise<{ starship: T }>
 
+export type Pilots<T> = Promise<{ pilots: T }>
+
 export type SwapiStarship = {
   name: string
   model: string
@@ -17,5 +19,27 @@ export const swapiStarship: Decoder<any, unknown> = object({
   manufacturer: string,
   hyperdrive_rating: string,
   starship_class: string,
-  pilots: array(string)
+  pilots: array(string),
 })
+
+export type SwapiPilots = {
+  name: "Luke Skywalker"
+  height: "172"
+  mass: "77"
+  hair_color: "blond"
+  skin_color: "fair"
+  eye_color: "blue"
+  gender: "male"
+}
+
+export const swapiPilots: Decoder<any, unknown> = array(
+  object({
+    name: string,
+    height: string,
+    mass: string,
+    hair_color: string,
+    skin_color: string,
+    eye_color: string,
+    gender: string,
+  })
+)
