@@ -1,2 +1,2 @@
-require("dotenv").config();
-require("./src/index").initApp();
+require("dotenv").config()
+require("./src/init").initApp()

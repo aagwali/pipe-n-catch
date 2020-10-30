@@ -10,25 +10,25 @@ export const colors = {
   grey: "rgb(150,150,150).underline",
 }
 
-export const selectStyle = (x: any) => {
+export const selectStyle = (x: string): string => {
   switch (x) {
-    case "Application Info":
+    case "Execution Info":
       return colors.grey
-    case "Application started":
+    case "Execution started":
       return colors.cyan
-    case "Application success":
+    case "Execution success":
       return colors.green
-    case "Application error":
+    case "Execution error":
       return colors.orange
-    case "Initiation error":
+    case "Application error":
       return colors.red
     default:
       return "white"
   }
 }
 
-export const addLine = (label: string) => {
-  if (label === "Application error" || label === "Application success") {
+export const addLine = (label: string): void => {
+  if (label === "Execution error" || label === "Execution success") {
     console.info("")
   }
 }

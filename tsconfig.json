@@ -3,7 +3,7 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "skipLibCheck": true,
-    "target": "es5",
+    "target": "es2015",
     "module": "commonjs",
     "esModuleInterop": true,
     "resolveJsonModule": true,
@@ -18,17 +18,8 @@
       "dom",
       "dom.iterable"
     ],
-    "plugins": [
-      {
-        "name": "typescript-tslint-plugin"
-      }
-    ],
-    "types": [
-      "node",
-    ],
+    "types": ["node"]
   },
   "exclude": [],
-  "include": [
-    "**/*.ts"
-  ]
+  "include": ["**/*.ts"]
 }
