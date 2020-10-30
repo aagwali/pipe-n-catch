@@ -1,12 +1,14 @@
-import * as Application from "./domain/application";
-import { logAs } from "./domain/chalkLogs"
+import * as Application from "./domains/application"
+import { ExecutionResult } from "./domains/application/types"
+import { logger } from "@df/prod-http-server"
 
-export const initApp = (): void => {
+export const startApp = async (): Promise<void> => {
+  const context = "some execution context value"
   try {
-    logAs("Application started", `Running swapi example from https://swapi.dev/`)
-    Application.validateConfig()
-    Application.start()
-  } catch (error) {
-    logAs("Initiation error", error)
+    logger.info(`Starting job execution with ${context}`)
+
+    Application.exitAs(ExecutionResult.ApplicationSuccess, { context })
+  } catch (appExit) {
+    await Application.saveExecutionResult(context, appExit)
   }
 }
