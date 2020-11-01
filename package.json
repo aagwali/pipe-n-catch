@@ -1,12 +1,12 @@
 {
-  "name": "dam-anteriority-synchronizer",
+  "name": "file-exporter",
   "version": "0.1.0",
   "description": "",
   "main": "index.ts",
   "author": "veepee",
   "license": "ISC",
   "scripts": {
-    "start": "npx ts-node index.ts",
+    "start": "npx ts-node index.ts | npx bunyan",
     "test": "echo test",
     "test-w": "echo test-watch",
     "ts-check": "npx tsc --noEmit --skipLibCheck",
@@ -27,8 +27,18 @@
     "typescript": "^4.0.3"
   },
   "dependencies": {
+    "@df/bam-client": "^0.5.0",
+    "@df/dam-client": "^0.3.1",
+    "@df/healthcheck-bull": "^0.2.0",
+    "@df/healthcheck-fs": "^0.2.0",
+    "@df/healthcheck-http": "^0.3.0",
+    "@df/healthcheck-mongo": "^0.3.0",
     "@df/prod-http-server": "^0.5.0",
+    "@df/redis-config-validator": "^0.1.3",
+    "@df/tracer": "^0.2.0",
+    "@types/bull": "^3.14.4",
     "async-parallel": "^1.2.3",
+    "bull": "^3.18.1",
     "chalk": "^4.1.0",
     "decoders": "^1.23.3",
     "dotenv": "^8.2.0",

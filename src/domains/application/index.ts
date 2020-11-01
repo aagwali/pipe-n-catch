@@ -1,11 +1,18 @@
+import { formatErrorToAppExit } from "./behaviors"
 import { handleExit } from "./exit"
-import { AppExit, AppExitOptions, ExecutionResult, ExitLabels } from "./types"
+import { AppExit, AppExitOptions, ExitLabels } from "./types"
+import Bull from "bull"
 
-export const saveExecutionResult = async (operationLabel: string, throwedValue: AppExit | Error): Promise<void> => {
-  const appExit =
-    throwedValue instanceof AppExit ? throwedValue : new AppExit(ExecutionResult.UnexpectedExit, throwedValue)
+export const handleExecutionResult = async (
+  acknowledgeJob: Bull.DoneCallback,
+  transaction: any,
+  jobExit: AppExit | Error,
+): Promise<void> => {
+  const appExit = formatErrorToAppExit(jobExit)
 
-  handleExit(appExit)
+  acknowledgeJob()
+
+  handleExit(transaction, appExit)
 }
 
 export const exitAs = (code: ExitLabels, options?: AppExitOptions): never => {

@@ -1,5 +1,26 @@
 export type Config = {
   nodeEnv: string
+  bullRedisUrl: string
+  bullQueuName: string
+  healthchecksCacheDurationSeconds: number
+  elasticApmServerUrl: string
+  environment: string
+  fluentHost: string
+  fluentPort: string
+  fluentTag: string
+  jobLockDuration: number
+  jobLockRenewTime: number
+  tmpDir: string
+  mountVec: string
+  bamClientEnv: string
+  damClientEnv: string
+  damApiKey: string
+  fileExporterApiUrl: string
+}
+
+export type JobData = {
+  id: string
+  scopelock: string
 }
 
 export enum ExecutionResult {
@@ -10,9 +31,9 @@ export enum ExecutionResult {
 export type ExitLabels = ExecutionResult
 
 export enum ExitLevel {
-  Error = "Error",
-  Warning = "Warning",
-  Success = "Success",
+  Error = "error",
+  Warning = "warning",
+  Success = "success",
 }
 
 export class AppExit extends Error {

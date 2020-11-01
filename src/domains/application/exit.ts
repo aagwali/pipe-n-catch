@@ -1,30 +1,19 @@
+import { endJobAs } from "./behaviors"
 import { AppExit, ExecutionResult, ExitLevel } from "./types"
-import { logAs } from "../chalkLogs"
-import { logger } from "@df/prod-http-server"
 
-const logExit = (level: ExitLevel, message: string): void => {
-  if (level === ExitLevel.Error) {
-    logAs("Execution error", message)
-    logger.error(message)
-  } else if (level === ExitLevel.Warning) {
-    logAs("Application warning", message)
-    logger.warning(message)
-  } else {
-    logAs("Execution success", message)
-    logger.info(message)
-  }
-}
-
-export const handleExit = (appExit: AppExit): void => {
+export const handleExit = (transaction: any, appExit: AppExit): void => {
   let message = ""
+
   switch (appExit.code) {
     case ExecutionResult.ApplicationSuccess:
       message = `${appExit.code} ${appExit.context}`
-      return logExit(ExitLevel.Success, message)
+      endJobAs(ExitLevel.Success, transaction, message)
+      break
 
     case ExecutionResult.UnexpectedExit:
       message = `${appExit.code} ${appExit.context}`
-      return logExit(ExitLevel.Error, message)
+      endJobAs(ExitLevel.Error, transaction, message)
+      break
 
     default: {
       ;((missingErrorCase: never) => "")(appExit.code)
