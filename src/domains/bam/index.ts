@@ -1,11 +1,9 @@
 import packageInfo from "../../../package.json"
 import os from "os"
-import { BamConfiguration, BamResponse, configure, fireEvent } from "@df/bam-client"
-import { Config } from "../application/types"
+import { BamConfiguration, BamResponse, configure as setConfiguration, fireEvent } from "@df/bam-client"
 import { Agent, EnvironmentHosts } from "./types"
 
-// todo check is async ?
-export const configureClient = (bamClientEnv: string): void => {
+export const configure = (bamClientEnv: string): void => {
   const bamConfig: BamConfiguration = {
     environment: bamClientEnv as EnvironmentHosts,
     instrument: {
@@ -16,7 +14,7 @@ export const configureClient = (bamClientEnv: string): void => {
     agent: { type: "service" as Agent, id: packageInfo.name },
     domain: "media",
   }
-  configure(bamConfig)
+  setConfiguration(bamConfig)
 }
 
 export const fireEventAllTasksCompleted = async (scopelock: string, result: any): Promise<BamResponse> =>

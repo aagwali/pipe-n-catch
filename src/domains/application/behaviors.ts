@@ -1,19 +1,20 @@
 import fs from "fs"
 import { AppExit, ExecutionResult, ExitLevel } from "./types"
 import { logger } from "@df/prod-http-server"
+import { jobConfig } from "./config"
 
-export const endJobAs = (level: ExitLevel, transaction: any, message: string): void => {
+export const endJobAs = (level: ExitLevel, message: string): void => {
   if (level === ExitLevel.Error) {
-    transaction.result = ExitLevel.Error
+    jobConfig.apmTransaction.result = ExitLevel.Error
     logger.error(message)
   } else if (level === ExitLevel.Warning) {
-    transaction.result = ExitLevel.Warning
+    jobConfig.apmTransaction.result = ExitLevel.Warning
     logger.warning(message)
   } else {
-    transaction.result = ExitLevel.Success
-    logger.info(message)
+    jobConfig.apmTransaction.result = ExitLevel.Success
+    jobConfig.logInfo(message)
   }
-  transaction.end()
+  jobConfig.apmTransaction.end()
 }
 
 export const createContainerTmp = (dir: string) => {

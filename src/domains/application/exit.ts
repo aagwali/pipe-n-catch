@@ -1,18 +1,19 @@
 import { endJobAs } from "./behaviors"
+import { jobConfig } from "./config"
 import { AppExit, ExecutionResult, ExitLevel } from "./types"
 
-export const handleExit = (transaction: any, appExit: AppExit): void => {
+export const handleExit = (appExit: AppExit): void => {
   let message = ""
 
   switch (appExit.code) {
     case ExecutionResult.ApplicationSuccess:
       message = `${appExit.code} ${appExit.context}`
-      endJobAs(ExitLevel.Success, transaction, message)
+      endJobAs(ExitLevel.Success, message)
       break
 
     case ExecutionResult.UnexpectedExit:
       message = `${appExit.code} ${appExit.context}`
-      endJobAs(ExitLevel.Error, transaction, message)
+      endJobAs(ExitLevel.Error, message)
       break
 
     default: {

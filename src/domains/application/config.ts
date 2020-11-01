@@ -1,5 +1,7 @@
-import { Config } from "./types"
+import tracer from "@df/tracer"
+import { AppExit, Config } from "./types"
 import { guard, number, object, string } from "decoders"
+import { logger } from "@df/prod-http-server"
 
 export const appConfig: Config = {
   nodeEnv: process.env.NODE_ENV,
@@ -43,4 +45,18 @@ export const configGuard = object({
 
 export const validateConfig = (): void => {
   guard(configGuard)(appConfig)
+}
+
+export const jobConfig = {
+  logInfo: (message: string) => logger.info(message),
+  logWarning: (message: string) => logger.warning(message),
+  logError: (message: string, error?: AppExit | Error) => logger.error({ error }, message),
+  apmTransaction: { end: () => logger.warning("apm transaction is not started"), result: null },
+}
+
+export const setjobConfig = (correlationId: string) => {
+  jobConfig.logInfo = (message: string) => logger.info({ correlationId }, message)
+  jobConfig.logWarning = (message: string) => logger.warning({ correlationId }, message)
+  jobConfig.logError = (message: string, error?: AppExit | Error) => logger.error({ error, correlationId }, message)
+  jobConfig.apmTransaction = tracer.startTransaction(correlationId, "job")
 }

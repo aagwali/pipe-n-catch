@@ -1,22 +1,20 @@
-import * as Application from "./domains/application"
 import { ExecutionResult, JobData } from "./domains/application/types"
-import { logger } from "@df/prod-http-server"
-import * as JobManagment from "./domains/bull"
-import { appConfig } from "./domains/application/config"
 import Bull from "bull"
-import tracer from "@df/tracer"
+import * as Application from "./domains/application"
+import { logger } from "@df/prod-http-server"
+import { jobConfig, setjobConfig } from "./domains/application/config"
 
-export const handleJob = async (): Promise<void> => {
-  const queue = await JobManagment.getQueue(appConfig)
+export const handleJob = async (queue: Bull.Queue<any>): Promise<void> => {
   await queue.process(
     async (job: Bull.Job<JobData>, acknowledgeJob: Bull.DoneCallback): Promise<any> => {
-      const { id, scopelock } = job.data
-      const transaction = tracer.startTransaction(`job ${job.id} : ${scopelock}`, "job")
-      logger.info(`Processing job ${job.id} : ${scopelock}`)
+      setjobConfig(`job_${job.id}_${job.data.scopelock}`)
       try {
+        const { id, scopelock } = job.data
+        jobConfig.logInfo(`Processing job ${job.id} : ${scopelock}`)
+
         Application.exitAs(ExecutionResult.ApplicationSuccess, { context: scopelock })
       } catch (jobExit) {
-        await Application.handleExecutionResult(acknowledgeJob, transaction, jobExit)
+        await Application.handleExecutionResult(acknowledgeJob, jobExit)
       }
     },
   )
