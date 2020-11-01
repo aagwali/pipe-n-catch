@@ -1,10 +1,9 @@
 import { formatErrorToAppExit } from "./behaviors"
 import { handleExit } from "./exit"
-import { AppExit, AppExitOptions, ExitLabels, JobData } from "./types"
-import Bull from "bull"
+import { AppDoneCallback, AppExit, AppExitOptions, ExitLabels } from "./types"
 
 export const handleExecutionResult = async (
-  acknowledgeJob: Bull.DoneCallback,
+  acknowledgeJob: AppDoneCallback,
   jobExit: AppExit | Error,
 ): Promise<void> => {
   const appExit = formatErrorToAppExit(jobExit)

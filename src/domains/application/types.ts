@@ -1,3 +1,5 @@
+import Bull from "bull"
+
 export type Config = {
   nodeEnv: string
   bullRedisUrl: string
@@ -18,17 +20,23 @@ export type Config = {
   fileExporterApiUrl: string
 }
 
-export type JobData = {
-  id: string
-  scopelock: string
-}
-
 export enum ExecutionResult {
   UnexpectedExit = "Unexpected",
   ApplicationSuccess = "Application succeded with",
 }
 
 export type ExitLabels = ExecutionResult
+
+export type JobData = {
+  id: string
+  scopelock: string
+}
+
+export type AppDoneCallback = Bull.DoneCallback
+
+export type AppJob<T> = Bull.Job<T>
+
+export type AppQueue<T = any> = Bull.Queue<T>
 
 export enum ExitLevel {
   Error = "error",

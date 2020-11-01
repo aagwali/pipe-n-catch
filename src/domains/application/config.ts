@@ -1,7 +1,9 @@
-import tracer from "@df/tracer"
-import { AppExit, Config } from "./types"
 import { guard, number, object, string } from "decoders"
+
 import { logger } from "@df/prod-http-server"
+import tracer from "@df/tracer"
+
+import { AppExit, AppJob, Config, JobData } from "./types"
 
 export const appConfig: Config = {
   nodeEnv: process.env.NODE_ENV,
@@ -48,15 +50,21 @@ export const validateConfig = (): void => {
 }
 
 export const jobConfig = {
-  logInfo: (message: string) => logger.info(message),
-  logWarning: (message: string) => logger.warning(message),
-  logError: (message: string, error?: AppExit | Error) => logger.error({ error }, message),
-  apmTransaction: { end: () => logger.warning("apm transaction is not started"), result: null },
+  logInfo: (message: string): void => logger.info(message),
+  logWarning: (message: string): void => logger.warning(message),
+  logError: (message: string, error?: AppExit | Error): void => logger.error({ error }, message),
+  apmTransaction: {
+    end: () => logger.warning("apm transaction is not started"),
+    result: null,
+  },
 }
 
+export const buildCorrelationId = (job: AppJob<JobData>): string => `job_${job.id}_${job.data.scopelock}`
+
 export const setjobConfig = (correlationId: string) => {
-  jobConfig.logInfo = (message: string) => logger.info({ correlationId }, message)
-  jobConfig.logWarning = (message: string) => logger.warning({ correlationId }, message)
-  jobConfig.logError = (message: string, error?: AppExit | Error) => logger.error({ error, correlationId }, message)
+  jobConfig.logInfo = (message: string): void => logger.info({ correlationId }, message)
+  jobConfig.logWarning = (message: string): void => logger.warning({ correlationId }, message)
+  jobConfig.logError = (message: string, error?: AppExit | Error): void =>
+    logger.error({ error, correlationId }, message)
   jobConfig.apmTransaction = tracer.startTransaction(correlationId, "job")
 }

@@ -1,7 +1,9 @@
 import fs from "fs"
-import { AppExit, ExecutionResult, ExitLevel } from "./types"
+
 import { logger } from "@df/prod-http-server"
+
 import { jobConfig } from "./config"
+import { AppExit, ExecutionResult, ExitLevel } from "./types"
 
 export const endJobAs = (level: ExitLevel, message: string): void => {
   if (level === ExitLevel.Error) {

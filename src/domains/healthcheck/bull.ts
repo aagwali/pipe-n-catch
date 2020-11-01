@@ -1,6 +1,7 @@
-import { logger } from "@df/prod-http-server"
-import { bullQueueCheckCallback } from "@df/healthcheck-bull"
 import Bull from "bull"
+
+import { bullQueueCheckCallback } from "@df/healthcheck-bull"
+import { logger } from "@df/prod-http-server"
 
 export const bullQueueDependencyConfig = (bullInstance: Bull.Queue<any>, healthchecksCacheDurationSeconds: number) => ({
   name: "bull",

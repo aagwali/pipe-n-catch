@@ -1,6 +1,8 @@
-import packageInfo from "../../../package.json"
 import os from "os"
+
 import { BamConfiguration, BamResponse, configure as setConfiguration, fireEvent } from "@df/bam-client"
+
+import packageInfo from "../../../package.json"
 import { Agent, EnvironmentHosts } from "./types"
 
 export const configure = (bamClientEnv: string): void => {

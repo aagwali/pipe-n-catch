@@ -1,19 +1,18 @@
-import * as BamClient from "./domains/bam"
 import * as DamClient from "@df/dam-client"
-import mongoose from "mongoose"
-import packageInfo from "../package.json"
-import { appConfig, validateConfig } from "./domains/application/config"
-import { createContainerTmp } from "./domains/application/behaviors"
-import { getQueue } from "./domains/bull"
-import { handleJob } from "."
 import { logger, startServer } from "@df/prod-http-server"
-import { getHealthchecks } from "./domains/healthcheck"
-import Bull from "bull"
 
-const startMonitoringServer = async (bullQueue: Bull.Queue<any>) => {
-  startServer(10010, getHealthchecks(bullQueue, appConfig.healthchecksCacheDurationSeconds, appConfig), async () => {
-    await mongoose.disconnect()
-    await bullQueue.close()
+import packageInfo from "../package.json"
+import { handleJob } from "./"
+import { createContainerTmp } from "./domains/application/behaviors"
+import { appConfig, validateConfig } from "./domains/application/config"
+import { AppQueue } from "./domains/application/types"
+import * as BamClient from "./domains/bam"
+import { getQueue } from "./domains/bull"
+import { getHealthchecks } from "./domains/healthcheck"
+
+const startMonitoringServer = async (queue: AppQueue) => {
+  startServer(10010, getHealthchecks(queue, appConfig.healthchecksCacheDurationSeconds, appConfig), async () => {
+    await queue.close()
   })
 }
 
@@ -26,9 +25,7 @@ export const initApp = async (): Promise<void> => {
     const queue = await getQueue(appConfig)
     startMonitoringServer(queue)
     await handleJob(queue)
-  } catch (error) {
-    logger.error(error)
-  } finally {
-    process.exit(1)
+  } catch (err) {
+    await logger.error({ err }, "Unexpected error")
   }
 }

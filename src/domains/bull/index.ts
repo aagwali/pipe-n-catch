@@ -1,5 +1,7 @@
 import Bull from "bull"
+
 import { asRedisOptions } from "@df/redis-config-validator"
+
 import { Config } from "../application/types"
 
 export const getQueue = async (config: Config): Promise<Bull.Queue<any>> => {

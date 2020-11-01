@@ -1,5 +1,6 @@
 import { httpCheckCallback } from "@df/healthcheck-http"
 import { logger } from "@df/prod-http-server"
+
 // a http call to the given uri without adding headers
 export const httpDependencyConfig = (name: string, url: string, healthchecksCacheDurationSeconds: number) => ({
   name: name,

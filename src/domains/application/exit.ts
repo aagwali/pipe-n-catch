@@ -1,5 +1,4 @@
 import { endJobAs } from "./behaviors"
-import { jobConfig } from "./config"
 import { AppExit, ExecutionResult, ExitLevel } from "./types"
 
 export const handleExit = (appExit: AppExit): void => {
