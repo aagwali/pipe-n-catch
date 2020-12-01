@@ -28,7 +28,7 @@ const completeStructure = {
     },
     updateBatch: "with transfer results - catch saving error",
     emit: "job treated",
-    setExecutionResult: {
+    setAppException: {
       set: "bull job status",
       emit: "bam FILE_EXPORT_COMPLETE if success - fluent bam error",
       log: "processMessage result",

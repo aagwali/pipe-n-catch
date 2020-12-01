@@ -12,7 +12,6 @@ export type Config = {
   fluentTag: string
   jobLockDuration: number
   jobLockRenewTime: number
-  tmpDir: string
   mountVec: string
   bamClientEnv: string
   damClientEnv: string
@@ -20,12 +19,11 @@ export type Config = {
   fileExporterApiUrl: string
 }
 
-export enum ExecutionResult {
-  UnexpectedExit = "Unexpected",
-  ApplicationSuccess = "Application succeded with",
+export enum AppException {
+  UnexpectedExit = "Unexpected App Exception :",
 }
 
-export type ExitLabels = ExecutionResult
+export type ExitLabels = AppException
 
 export type JobData = {
   id: string
