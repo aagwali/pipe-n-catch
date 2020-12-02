@@ -1,6 +1,8 @@
-import { buildCorrelationId, logInfo, setjobConfig } from "./domains/application/config"
+import * as Application from "./domains/application"
+import { buildCorrelationId, logError, logInfo, setjobConfig } from "./domains/application/config"
 import { handleExceptions, setSuccess } from "./domains/application/exit"
 import { AppDoneCallback, AppJob, AppQueue, JobData } from "./domains/application/types"
+import * as FileExporterApi from "./domains/fileExporter"
 
 export const handleJob = async (queue: AppQueue): Promise<void> =>
   queue
@@ -9,7 +11,17 @@ export const handleJob = async (queue: AppQueue): Promise<void> =>
         try {
           setjobConfig(buildCorrelationId(job), queue)
 
-          logInfo(`Processing job ${job.id} : ${job.data.scopelock}`)
+          const { scopelock } = job.data
+
+          logInfo(`Processing job ${job.id} : ${scopelock}`)
+
+          const allTasks = await FileExporterApi.getTasksFromBatch(scopelock)
+
+          const allTasksUpdated = await Application.processToFileCopy(allTasks)
+
+          await FileExporterApi.updateBatchTasks(allTasksUpdated)
+
+          await Application.checkProcessResult(allTasksUpdated)
 
           setSuccess(acknowledgeJob)
         } catch (exception) {
@@ -17,4 +29,5 @@ export const handleJob = async (queue: AppQueue): Promise<void> =>
         }
       },
     )
-    .finally(() => queue.close())
+    .catch((e) => logError(e, "uneeee"))
+// .finally(() => queue.close())

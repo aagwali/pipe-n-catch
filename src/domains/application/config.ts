@@ -20,7 +20,7 @@ export const appConfig: Config = {
   bamClientEnv: process.env.BAM_CLIENT_ENVIRONMENT,
   damClientEnv: process.env.DAM_CLIENT_ENVIRONMENT,
   damApiKey: process.env.DAM_API_KEY,
-  fileExporterApiUrl: process.env.WORKFLOW_API_URL,
+  fileExporterApiUrl: process.env.FILE_EXPORTER_API_URL,
 }
 
 export const configGuard = object({
@@ -51,10 +51,11 @@ export let apmTransaction = {
   result: null,
 }
 
-let childLogger = logger
-export const logInfo = (s: any): void => childLogger.info(s)
-export const logError = (err: Error, s: any): void => childLogger.error({ err }, s)
-export const logWarning = (s: any): void => childLogger.warning(s)
+let childLogger = null
+
+export const logInfo = (s: any): void => (childLogger ? childLogger.info(s) : logger.info(s))
+export const logError = (err: Error, s: any): void => (childLogger ? childLogger.error({ err }, s) : logger.error(s))
+export const logWarning = (s: any): void => (childLogger ? childLogger.warn(s) : logger.warning(s))
 
 export const setjobConfig = (req_id: string, onAcknowledgedmentQueue: AppQueue): void => {
   apmTransaction = tracer.startTransaction(req_id, "job")

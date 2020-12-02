@@ -43,8 +43,10 @@
     "bunyan": "^1.8.14",
     "decoders": "^1.23.3",
     "dotenv": "^8.2.0",
+    "polly-js": "^1.6.8",
     "rambda": "^6.2.0",
-    "typed-rest-client": "^1.7.3"
+    "typed-rest-client": "^1.7.3",
+    "url": "^0.11.0"
   },
   "husky": {
     "hooks": {

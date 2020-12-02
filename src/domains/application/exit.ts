@@ -25,10 +25,28 @@ export const handleExceptions = (throwedValue: AppExit | Error, acknowledgeJob: 
   const appExit =
     throwedValue instanceof AppExit ? throwedValue : new AppExit(AppException.UnexpectedExit, throwedValue)
 
+  let error = null
+  let errorMessage = null
+
   switch (appExit.code) {
+    case AppException.AllTasksAreEnded:
+      return exitJob(ExitLevel.Warning, appExit.code, acknowledgeJob)
+
+    case AppException.SomeCopyFailed:
+      error = appExit.context instanceof Error ? appExit.context : null
+      errorMessage = `${appExit.code} ${error?.message}`
+      return exitJob(ExitLevel.Error, errorMessage, acknowledgeJob, error)
+
+    case AppException.UrlProtocolUnrecognized:
+      const message = `${appExit.code} : ${appExit.context}`
+      return exitJob(ExitLevel.Warning, message, acknowledgeJob)
+
+    case AppException.HttpProtocolUploadError:
+      return exitJob(ExitLevel.Error, appExit.code, acknowledgeJob)
+
     case AppException.UnexpectedExit:
-      const error = appExit.context instanceof Error ? appExit.context : null
-      const errorMessage = `${appExit.code} ${error?.message}`
+      error = appExit.context instanceof Error ? appExit.context : null
+      errorMessage = `${appExit.code} ${error?.message}`
       return exitJob(ExitLevel.Error, errorMessage, acknowledgeJob, error)
 
     default: {
