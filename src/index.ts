@@ -1,14 +1,20 @@
-import * as Application from "./domains/application"
-import { ExecutionResult } from "./domains/application/types"
-import { logger } from "@df/prod-http-server"
+import * as Application from "./application"
+import { validateConfig } from "./config"
+import { handleExits } from "./exits"
+import { logInfo } from "./infra/log"
 
-export const startApp = async (): Promise<void> => {
-  const context = "some execution context value"
+export const init = async (): Promise<void> => {
   try {
-    logger.info(`Starting job execution with ${context}`)
+    logInfo("Application initialisation")
 
-    Application.exitAs(ExecutionResult.ApplicationSuccess, { context })
-  } catch (appExit) {
-    await Application.saveExecutionResult(context, appExit)
+    await validateConfig()
+
+    logInfo("Application start")
+
+    const processed = await Application.startProcess()
+
+    logInfo(`Success of : ${processed}`)
+  } catch (error) {
+    handleExits(error)
   }
 }
