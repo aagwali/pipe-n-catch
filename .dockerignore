@@ -1,0 +1,14 @@
+.vscode/
+.editorconfig
+*.log
+docker-compose*
+.git
+.eslintrc*
+.eslintignore
+.prettierrc*
+.gitignore
+.env
+.env.example
+dist
+README.md
+node_modules
