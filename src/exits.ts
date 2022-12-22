@@ -47,7 +47,7 @@ export const convertToSafeException = (errorOrException: Exception | Error | unk
             data: errorOrException.exceptionDetails.data || "Data should be provided when raising an exception",
           },
         }
-      : new Exception(CoreExceptions.UnexpectedError, {
+      : new Exception(AppExceptions.UnexpectedError, {
           isError: true,
           error: safeError,
           data: "Unexpected errors have no data, details are in error property",
